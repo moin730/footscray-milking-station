@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Palette pulled from the shop sign: cream panels, dark green and lime blocks,
+ * black milk bottle. The teal nods to the bird mural on the side wall.
+ */
+@theme {
+  --color-cream: #f3ebd3;
+  --color-paper: #faf6e9;
+  --color-green: #1f3a2b;
+  --color-green-deep: #15291e;
+  --color-lime: #bccd3f;
+  --color-ink: #141414;
+  --color-teal: #2c7f7a;
+
+  --font-display: var(--font-anton), "Anton", Impact, sans-serif;
+  --font-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-logo: var(--font-playfair), "Playfair Display", Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Expanded heading style, like the reference's wide caps. */
+@utility font-wide {
+  font-family: var(--font-sans);
+  font-stretch: 120%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-green-deep);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-lime);
+  color: var(--color-ink);
+}
+
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.spin {
+  animation: spin 18s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee,
+  .spin {
+    animation: none;
+  }
+}
+
+/* Dotted leader between a menu item and its price. */
+.leader {
+  flex: 1;
+  border-bottom: 2px dotted currentColor;
+  opacity: 0.35;
+  transform: translateY(-0.3em);
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
 }
